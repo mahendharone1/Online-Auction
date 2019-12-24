@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-
 from b_admin.smssending import sendSMS
 from user.models import UserModel
 
