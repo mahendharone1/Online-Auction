@@ -21,7 +21,7 @@ from django.views.generic import TemplateView
 from bidding import settings
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('b_admin/',include('b_admin.urls')),
     path('user/',include('user.urls')),
     path('reports/',include('reports.urls')),
