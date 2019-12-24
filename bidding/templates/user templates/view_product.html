@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    {% include 'head.html' %}
+    {% include 'user templates/user_menu.html' %}
+    <br><br>
+    {% if request.session.user_name %}
+    {% if use_product %}
+  <table align="center" bgcolor="aqua" border="3">
+        <tr>
+            <th colspan="8" style="text-align: center;color: orange">saved products</th>
+        </tr>
+      <tr style="color: blue">
+          <th>Product_id</th>
+          <th>Product NAME</th>
+          <th>Product Bid Price</th>
+          <th>Product Information</th>
+          <th>Status</th>
+          <th>Product Image</th>
+
+      </tr>
+      {% for x in use_product %}
+          <tr>
+            <th><a href="{% url 'viewbid_show' %}?pid={{ x.pid }}"> {{ x.pid }}</a></th>
+            <th>{{ x.pname }}</th>
+            <th>{{ x.bprice }}</th>
+            <th>{{ x.pinfo}}</th>
+            <th>{{ x.pstatus }}</th>
+            <th>
+                <a href="{{ x.pimage.url }}">
+                        <img src="{{ x.pimage.url }}" width="50" height="50">
+                </a>
+            </th>
+
+          </tr>
+      {% endfor %}
+  </table>
+  {% else %}
+    <h6 style="text-align: center;color: red">No products,please add products  <a href="{% url 'user_seller' %}">ADD PRODUCT</a></h6>
+  {% endif %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if use_product.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ use_product.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ use_product.number }} of {{ use_product.paginator.num_pages }}.
+        </span>
+
+        {% if use_product.has_next %}
+            <a href="?page={{ use_product.next_page_number }}">next</a>
+            <a href="?page={{ use_product.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+  {% else %}
+            {% for x in messages %}
+                <h6 style="text-align: center;color: blue">{{ x }}<a href="{% url 'Buyer_Seller' %}">login</a></h6>
+            {% endfor %}
+        {% endif %}
+  </body>
+</html>

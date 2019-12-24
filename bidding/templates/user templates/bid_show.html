@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    {% include 'head.html' %}
+    {% include 'user templates/user_menu.html' %}
+    <br><br>
+    {% if request.session.user_name %}
+    <h1 align="center">Product : {{ pno.pid }}</h1>
+    {% if data %}
+  <table align="center" border="3">
+        <tr>
+            <th colspan="8" style="text-align: center">start bidding products</th>
+        </tr>
+      <tr style="color: blue">
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>User</th>
+      </tr>
+      {% for x in data %}
+          <tr>
+
+            <th>{{ x.bid_price }}</th>
+            <th>{{ x.date }}</th>
+            <th>{{ x.time}}</th>
+            <th>{{ x.uid.name }}</th>
+          </tr>
+      {% endfor %}
+  </table>
+  {% else %}
+    <h6 style="text-align: center;color: red">No products</h6>
+  {% endif %}
+  <br>
+    <table align="center" border="2">
+    <form action="{% url 'bid_details' %}" method="post">
+                  {% csrf_token %}
+        <tr>
+            <th colspan="4" style="text-align: center">
+
+                <input type="number" name="b1" placeholder="bid amount">
+                <input type="hidden" name="b2" value="{{ pno.pid }}">
+                <input type="hidden" name="b3" value="{{ request.session.user_id }}">
+                <button type="submit">bid</button>
+            </th>
+        </tr>
+        </table>
+          </form>
+{#  <div class="pagination">#}
+{#    <span class="step-links">#}
+{#        {% if data.has_previous %}#}
+{#            <a href="?page=1">&laquo; first</a>#}
+{#            <a href="?page={{ data.previous_page_number }}">previous</a>#}
+{#        {% endif %}#}
+{##}
+{#        <span class="current">#}
+{#            Page {{ data.number }} of {{ data.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#        {% if data.has_next %}#}
+{#            <a href="?page={{ data.next_page_number }}">next</a>#}
+{#            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>#}
+{#        {% endif %}#}
+{#    </span>#}
+{#</div>#}
+  {% else %}
+            {% for x in messages %}
+                <h6 style="text-align: center;color: blue">{{ x }}<a href="{% url 'Buyer_Seller' %}">login</a></h6>
+            {% endfor %}
+        {% endif %}
+  </body>
+</html>

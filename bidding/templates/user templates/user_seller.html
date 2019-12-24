@@ -1,0 +1,70 @@
+<html>
+    <head></head>
+    <body>
+    {% include 'head.html' %}
+    {% include 'user templates/user_menu.html' %}
+    <br>
+    {% if request.session.user_name %}
+    <form action="{% url 'save_product' %}" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <table align="center">
+            <tr>
+                <th colspan="2" style="text-align: center">
+                    Add Product
+                </th>
+
+            </tr>
+            <tr>
+                <th>
+                    Product Name:
+                </th>
+                <th>
+                    <input type="text" placeholder="name" required name="p1">
+                </th>
+            </tr>
+            <tr>
+                <th>
+                   Bidding Price
+                </th>
+                <th>
+                    <input type="number" placeholder="Contact" required name="p2">
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Product Information
+                </th>
+                <th>
+                    <textarea required rows="4" cols="50" name="p3"></textarea>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Product Image
+                </th>
+                <th>
+                   <input type="file"  name="file"  required>
+                </th>
+            </tr>
+
+            <tr>
+                <th colspan="2" style="text-align: center">
+                    <button type="submit">Save</button>
+                </th>
+            </tr>
+
+
+        </table>
+
+        </form>
+    <h6 align="center"><a href="{% url 'view_product' %}">View_products</a></h6>
+        {% else %}
+            {% for x in messages %}
+                <h6 style="text-align: center;color: blue">{{ x }}<a href="{% url 'Buyer_Seller' %}">login</a></h6>
+            {% endfor %}
+        {% endif %}
+
+
+
+    </body>
+</html>
